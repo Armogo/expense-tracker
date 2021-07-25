@@ -1,4 +1,58 @@
-<h2>Dad sees everything here</h2>
+<main class="container">
+  <div class="overview-container">
 
-<a href="/expense-tracker/new">new</a>
-<a href="/expense-tracker/:id">edit</a>
+    <label>選擇類別</label><br>
+    <select class="category-filter">
+      <option>類別</option>
+      <option>家居物業</option>
+      <option>交通出行</option>
+      <option>休閒娛樂</option>
+      <option>餐飲食品</option>
+      <option>其他</option>
+    </select>
+    
+    <div>總金額:</div>
+    <div class="total-amount">5000000000</div>
+  </div>
+
+  <div class="record-container">
+    <div class="each-record">
+      <span class="record-info">
+        <span class="expense-icon">圖案</span>
+        <div>
+          <div class="expense-name">午餐</div>
+          <span class="expense-date">2020/07/20</span>
+        </div>
+        <span class="expense-amount">60</span>
+      </span>
+
+      <span class="button-container">
+        <a href="/expense-tracker/:id">修改</a>
+        <button>刪除</button>
+      </span>
+    </div>
+    
+  
+    <div class="each-record">
+      <span class="record-info">
+        <span class="expense-icon">圖案</span>
+        <div>
+          <div class="expense-name">晚餐</div>
+          <span class="expense-date">2020/07/20</span>
+        </div>
+        <span class="expense-amount">60</span>
+      </span>
+  
+      <span class="button-container">
+        <a href="/expense-tracker/:id">修改</a>
+        <button>刪除</button>
+      </span>
+    </div>
+  </div>  
+</main>
+
+<aside>
+  <a href="/expense-tracker/new" class="new-expense-btn"><button>新增支出</button></a>
+</aside>
+
+

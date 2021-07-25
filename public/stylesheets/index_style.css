@@ -1,0 +1,78 @@
+main.container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 30%;
+  margin-bottom: 3%;
+}
+
+  .overview-container {
+    flex-wrap: wrap; 
+    align-content: center;
+  }
+
+    .category-filter {
+      width: 50%;
+      margin-bottom: 3%;
+    }
+
+    .total-amount {
+      width: 50%;
+      text-align: end;
+      font-size: 15vh;
+    }
+
+  .record-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+    .each-record {
+      display: flex;
+      padding: 5px 0 0 0;
+    }
+
+      .record-info {
+        display: flex;
+        width: 51%;
+        background-color:  rgb(225, 226, 226);
+      }
+
+        .expense-icon {
+          display: flex;
+          align-items: center;
+          padding: 0 2%;
+        }
+
+        .record-info > div {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+        }
+
+          .expense-name {
+            font-size: large;
+          }     
+
+          .expense-date {
+            font-size: small;
+          }
+
+        .expense-amount {
+          display: flex;
+          align-items: center;
+          font-size: large;
+          margin: 0 5% 0 auto;
+        }
+    
+      .button-container {
+        width: 25%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+.new-expense-btn {
+  margin: 0 0 0 45%;
+}
+
+

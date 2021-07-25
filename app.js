@@ -23,7 +23,7 @@ db.once('open', () => {
 // view engine
 app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
-
+app.use(express.static('public'))
 
 // routes
   // 使用者 (老爸) 可以：在首頁一次瀏覽所有支出的清單
