@@ -38,7 +38,7 @@ app.get('/expense-tracker/new', (req, res) => {
   res.render('new')
 })
 
-app.post('/expense-tracker/:id', (req, res) => {
+app.post('/expense-tracker', (req, res) => {
   res.redirect('/')
 })
 

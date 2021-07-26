@@ -1,0 +1,19 @@
+  .new-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 35%;
+  margin-bottom: 3%;
+}
+
+
+main > form > div {
+  margin: 8% 0%;
+}
+
+div > input {
+  width: 15%;
+}
+
+div > select {
+  width: 15%;
+}
