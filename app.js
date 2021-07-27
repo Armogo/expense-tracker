@@ -55,11 +55,21 @@ app.get('/', (req, res) => {
 
   // 使用者 (老爸) 可以：新增一筆支出
 app.get('/expense-tracker/new', (req, res) => {
-  res.render('new')
+  Category.find()
+    .lean()
+    .then(category => {
+      res.render('new', {category})
+    })
 })
 
 app.post('/expense-tracker', (req, res) => {
-  res.redirect('/')
+  const name = req.body.name
+  const date = req.body.date
+  const category = req.body.category
+  const amount = req.body.amount
+
+  Record.create({name, date, category, amount})
+    .then(() => res.redirect('/'))
 })
 
   // 使用者 (老爸) 可以：編輯支出的所有屬性 (一次只能編輯一筆)
