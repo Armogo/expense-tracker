@@ -2,6 +2,9 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const Record = require('./models/record')
+const Category = require('./models/category')
+const { urlencoded } = require('express')
 
 // variables
 const app = express()
@@ -25,12 +28,29 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(express.urlencoded({extended: true}))
+
 // routes
   // 使用者 (老爸) 可以：在首頁一次瀏覽所有支出的清單
   // 使用者 (老爸) 可以：在首頁看到所有支出清單的總金額
   // 使用者 (老爸) 可以：在首頁可以根據支出「類別」篩選支出；總金額的計算只會包括被篩選出來的支出總和。
 app.get('/', (req, res) => {
-  res.render('index')
+  Record.find()
+  .lean()
+  .then(record => {
+    let totalAmount = 0
+
+    record.forEach(item => {
+      totalAmount += item.amount
+    })
+
+    Category.find()
+      .lean()
+      .then(category => {
+        res.render('index', { record, category, totalAmount })
+      })
+  })  
 })
 
   // 使用者 (老爸) 可以：新增一筆支出
