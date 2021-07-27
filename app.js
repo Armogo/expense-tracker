@@ -43,11 +43,11 @@ app.post('/expense-tracker', (req, res) => {
 })
 
   // 使用者 (老爸) 可以：編輯支出的所有屬性 (一次只能編輯一筆)
-app.get('expense-tracker/:id', (req, res) => {
+app.get('/expense-tracker/edit', (req, res) => {
   res.render('edit')
-}) 
+})
 
-app.post('expense-tracker/:id', (req, res) => {
+app.post('/expense-tracker/edit', (req, res) => {
   res.redirect('/')
 })
 

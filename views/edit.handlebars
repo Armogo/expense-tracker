@@ -1,1 +1,39 @@
-<h2>Dad wants to edit this entry</h2>
+<main class="new-container">
+  <form action="/expense-tracker/edit" method="POST" id="edit">
+    <section>
+      <span>*必填欄位</span>
+      <span>請修改你的支出</span>
+    </section>
+
+    <div>
+      <label for="name">名稱* :</label>
+      <input type="text" id="name" name="name" value="">
+    </div>
+
+    <div>
+      <label for="date">日期* :</label>
+      <input type="date" id="date" name="date" value="">
+    </div>
+
+    <div>
+      <label for="category">類別* :</label>
+      <select name="category" id="category">
+        <option>Select</option>
+        <option>家居物業</option>
+        <option>交通出行</option>
+        <option>休閒娛樂</option>
+        <option>餐飲食品</option>
+        <option>其他</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="amount">金額* :</label>
+      <input type="number" id="amount" name="amount">
+    </div>
+  </form>
+</main>
+
+<aside>
+  <button type="submit" form="edit" class="new-expense-btn">送出</button>
+</aside>
