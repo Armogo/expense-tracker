@@ -9,11 +9,18 @@ db.on('error', () => {
   console.log('mongodb error!')
 })
 db.once('open', async () => { // 讓loop跑完所有種子資料再關閉與mongodb的連線，參考: https://zellwk.com/blog/async-await-in-loops/
-  const arr = ['家居物業', '交通出行', '休閒娛樂', '餐飲食品', '其他']
-  
+  const category = [
+    ['家居物業', 'fas fa-home'], 
+    ['交通出行', 'fas fa-shuttle-van'], 
+    ['休閒娛樂', 'fas fa-grin-beam'], 
+    ['餐飲食品', 'fas fa-utensils'],
+    ['其他', 'fas fa-pen']
+  ]
+
   console.log('mongodb connected.')
-  for (let i = 0; i < arr.length; i++) {
-    await Category.create({ category: arr[i] }) // 用 await 確保資料全都寫入mongoDB
+  
+  for (let i = 0; i < category.length; i++) {
+    await Category.create({ category: category[i][0], icon: category[i][1] }) // 用 await 確保資料全都寫入mongoDB
   }
   
   console.log('category seed data successfully created!')
