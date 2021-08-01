@@ -37,6 +37,7 @@ app.use(express.urlencoded({extended: true}))
   // 使用者 (老爸) 可以：在首頁可以根據支出「類別」篩選支出；總金額的計算只會包括被篩選出來的支出總和。
 app.get('/', (req, res) => {
   Record.find()
+  .sort({ date: 'desc' })
   .lean()
   .then(record => {
     let totalAmount = 0
