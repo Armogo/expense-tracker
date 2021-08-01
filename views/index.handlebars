@@ -30,7 +30,9 @@
   
       <span class="button-container">
         <a href="/expense-tracker/edit/{{this._id}}">修改</a>
-        <button>刪除</button>
+        <form action="/expense-tracker/delete/{{this._id}}" method="POST" id="{{this._id}}">
+          <button form="{{this._id}}" type="submit">刪除</button>
+        </form>
       </span>
     </div>
     {{/each}}
@@ -38,7 +40,9 @@
 </main>
 
 <aside>
-  <a href="/expense-tracker/new" class="new-expense-btn"><button>新增支出</button></a>
+  <a href="/expense-tracker/new" class="new-expense-btn">
+    <button>新增支出</button>
+  </a>
 </aside>
 
 

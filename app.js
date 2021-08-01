@@ -85,6 +85,7 @@ app.post('/expense-tracker', (req, res) => {
   // 使用者 (老爸) 可以：編輯支出的所有屬性 (一次只能編輯一筆)
 app.get('/expense-tracker/edit/:id', (req, res) => {
   const id = req.params.id
+
   Record.findById(id)
     .lean()  
     .then(record => {
@@ -121,8 +122,15 @@ app.post('/expense-tracker/edit/:id', (req, res) => {
 })
 
   // 使用者 (老爸) 可以：刪除任何一筆支出 (一次只能刪除一筆)
-app.post('', (req, res) => {
-  res.redirect('/')
+app.post('/expense-tracker/delete/:id', (req, res) => {
+  const id = req.params.id
+  
+  Record.findById(id)
+    .then((record) => {
+      record.remove()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
 app.listen(port, () => {
