@@ -2,9 +2,9 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const moment = require('moment')
 const Record = require('./models/record')
 const Category = require('./models/category')
-const { urlencoded } = require('express')
 
 // variables
 const app = express()
@@ -44,22 +44,31 @@ app.get('/', (req, res) => {
     record.forEach(item => {
       totalAmount += item.amount
     })
+    // 轉換Record內的date格式 => YYYY/MM/DD
+    record.forEach(item => {
+      item.date = moment(item.date).format('YYYY/MM/DD')
+    })
 
     Category.find()
       .lean()
       .then(category => {
+        // 把Category內的"icon"值傳入對應的Record，方便render view時取用
+        record.forEach(record => { 
+          record.icon = category.find(item => item.category === record.category).icon
+        })
         res.render('index', { record, category, totalAmount })
       })
-  })  
+      .catch(error => console.log(error))
+  })
+  .catch(error => console.log(error))  
 })
 
   // 使用者 (老爸) 可以：新增一筆支出
 app.get('/expense-tracker/new', (req, res) => {
   Category.find()
     .lean()
-    .then(category => {
-      res.render('new', {category})
-    })
+    .then(category => {res.render('new', {category})})
+    .catch(error => console.log(error))
 })
 
 app.post('/expense-tracker', (req, res) => {
@@ -70,15 +79,45 @@ app.post('/expense-tracker', (req, res) => {
 
   Record.create({name, date, category, amount})
     .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
   // 使用者 (老爸) 可以：編輯支出的所有屬性 (一次只能編輯一筆)
-app.get('/expense-tracker/edit', (req, res) => {
-  res.render('edit')
+app.get('/expense-tracker/edit/:id', (req, res) => {
+  const id = req.params.id
+  Record.findById(id)
+    .lean()  
+    .then(record => {
+      const date = moment(record.date).format('YYYY-MM-DD')
+      
+      Category.find()
+        .lean()
+        .then(category => {
+          // 比對每個category.category是否等於該record.category，將結果以key-value帶入category，用於edit頁面的<option>
+          category.forEach(item => { 
+            item.match = item.category === record.category
+          })
+          res.render('edit', {record, date, category})
+        })
+    })
+    .catch(error => console.log(error))
 })
 
-app.post('/expense-tracker/edit', (req, res) => {
-  res.redirect('/')
+app.post('/expense-tracker/edit/:id', (req, res) => {
+  const id = req.params.id
+  const {name, category, date, amount} = req.body
+
+  Record.findById(id)
+    .then(record => {
+      record.name = name
+      record.category = category
+      record.date = date
+      record.amount = amount
+
+      record.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
   // 使用者 (老爸) 可以：刪除任何一筆支出 (一次只能刪除一筆)

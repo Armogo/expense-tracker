@@ -18,7 +18,9 @@
     {{#each record}}
     <div class="each-record">
       <span class="record-info">
-        <span class="expense-icon">圖案</span>
+        <span class="expense-icon">
+          <i class="{{this.icon}}"></i>
+        </span>
         <div>
           <div class="expense-name">{{this.name}}</div>
           <span class="expense-date">{{this.date}}</span>
@@ -27,7 +29,7 @@
       </span>
   
       <span class="button-container">
-        <a href="/expense-tracker/edit">修改</a>
+        <a href="/expense-tracker/edit/{{this._id}}">修改</a>
         <button>刪除</button>
       </span>
     </div>

@@ -18,7 +18,6 @@
     <div>
       <label for="category">類別* :</label>
       <select name="category" id="category">
-        <option>Select</option>
         {{#each category}}
         <option>{{this.category}}</option>
         {{/each}}
@@ -27,7 +26,7 @@
 
     <div>
       <label for="amount">金額* :</label>
-      <input type="number" id="amount" name="amount">
+      <input type="number" id="amount" name="amount" min="0">
     </div>
   </form>
 </main>
