@@ -1,13 +1,8 @@
 const mongoose = require('mongoose')
+const db = require('../../config/mongoose')
 const Category = require('../category')
 
-mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
 
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb error!')
-})
 db.once('open', async () => { // 讓loop跑完所有種子資料再關閉與mongodb的連線，參考: https://zellwk.com/blog/async-await-in-loops/
   const category = [
     ['家居物業', 'fas fa-home'], 
