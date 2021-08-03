@@ -32,8 +32,8 @@
       </span>
   
       <span class="button-container">
-        <a href="/expense-tracker/edit/{{this._id}}">修改</a>
-        <form action="/expense-tracker/delete/{{this._id}}" method="POST" id="{{this._id}}">
+        <a href="/expense-tracker/{{this._id}}/edit">修改</a>
+        <form action="/expense-tracker/{{this._id}}/?_method=DELETE" method="POST" id="{{this._id}}">
           <button form="{{this._id}}" type="submit">刪除</button>
         </form>
       </span>

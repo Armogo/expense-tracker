@@ -3,6 +3,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const moment = require('moment')
+const methodOverride = require('method-override')
 const Record = require('./models/record')
 const Category = require('./models/category')
 
@@ -27,6 +28,7 @@ db.once('open', () => {
 app.engine('handlebars', exphbs({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
+app.use(methodOverride('_method'))
 
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(express.urlencoded({extended: true}))
@@ -107,7 +109,7 @@ app.post('/expense-tracker', (req, res) => {
 })
 
   // 使用者 (老爸) 可以：編輯支出的所有屬性 (一次只能編輯一筆)
-app.get('/expense-tracker/edit/:id', (req, res) => {
+app.get('/expense-tracker/:id/edit', (req, res) => {
   const id = req.params.id
 
   Record.findById(id)
@@ -128,7 +130,7 @@ app.get('/expense-tracker/edit/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/expense-tracker/edit/:id', (req, res) => {
+app.put('/expense-tracker/:id', (req, res) => {
   const id = req.params.id
   const {name, category, date, amount} = req.body
 
@@ -146,7 +148,7 @@ app.post('/expense-tracker/edit/:id', (req, res) => {
 })
 
   // 使用者 (老爸) 可以：刪除任何一筆支出 (一次只能刪除一筆)
-app.post('/expense-tracker/delete/:id', (req, res) => {
+app.delete('/expense-tracker/:id', (req, res) => {
   const id = req.params.id
   
   Record.findById(id)
