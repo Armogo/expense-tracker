@@ -40,11 +40,7 @@ app.get('/', (req, res) => {
   .sort({ date: 'desc' })
   .lean()
   .then(record => {
-    let totalAmount = 0
 
-    record.forEach(item => {
-      totalAmount += item.amount
-    })
     // 轉換Record內的date格式 => YYYY/MM/DD
     record.forEach(item => {
       item.date = moment(item.date).format('YYYY/MM/DD')
@@ -57,12 +53,39 @@ app.get('/', (req, res) => {
         record.forEach(record => { 
           record.icon = category.find(item => item.category === record.category).icon
         })
-        res.render('index', { record, category, totalAmount })
+        // 首頁的category filter
+        const categoryFilter = req.query.categoryFilter
+
+        if (categoryFilter && categoryFilter !== "類別") {
+          const filteredRecord = record.filter(item => item.category === categoryFilter)
+
+          // user選擇任一category後，把該category傳入index.handlebars，讓category filter停留在當前的category
+          category.forEach(item => { 
+            item.match = item.category === categoryFilter
+          })
+          // 根據篩選結果，顯示對應的總金額
+          let totalAmount = 0
+
+          filteredRecord.forEach(item => {
+            totalAmount += item.amount
+          })
+          return res.render('index', { record: filteredRecord, category, totalAmount })
+
+        } else {
+          // 根據篩選結果，顯示對應的總金額
+          let totalAmount = 0
+
+          record.forEach(item => {
+            totalAmount += item.amount
+          })
+          return res.render('index', { record, category, totalAmount })
+        }
       })
       .catch(error => console.log(error))
-  })
-  .catch(error => console.log(error))  
+    })
+  .catch(error => console.log(error))
 })
+  
 
   // 使用者 (老爸) 可以：新增一筆支出
 app.get('/expense-tracker/new', (req, res) => {
