@@ -1,51 +1,52 @@
-<main class="container">
-  <div class="overview-container">
+<div class="form-group mt-5 col-md-8 mx-auto" style="max-width: 425px">
+  <form action="/" method="GET" class="mt-3">
+    <select class="form-select"  style="font-size: 1.2em;" name="category" onchange="submit()">
+      <option>類別</option>
+      {{#each category}}
+      <option {{#if this.match}} selected="selected" {{/if}}>{{this.category}}</option>
+      {{/each}}
+    </select>
+  </form>
+</div>
 
-    <form action="/" method="GET">
-      <label>選擇類別</label><br>
-      <select class="category-filter" onchange="submit()" name="categoryFilter">
-        <option>類別</option>
-        {{#each category}}
-        <option {{#if this.match}} selected="selected" {{/if}}>{{this.category}}</option>
-        {{/each}}
-      </select>
-    </form>
-    
-    
-    <div>總金額: </div>
-    <div class="total-amount">{{totalAmount}}</div>
+<div class="row justify-content-center mt-5">
+  <div class="row col-md-8 col-lg-6 col-xl-5 justify-content-around">
+    <div class="col-auto" style="font-size: 1.5em;">總金額：</div>
+    <div class="col-auto text-end text-warning" style="font-size: 6em;">{{totalAmount}}</div>
   </div>
-  
-  <div class="record-container">
-    
+</div>
+
+<main>
+  <div class="row">
     {{#each record}}
-    <div class="each-record">
-      <span class="record-info">
-        <span class="expense-icon">
-          <i class="{{this.icon}}"></i>
-        </span>
-        <div>
-          <div class="expense-name">{{this.name}}</div>
-          <span class="expense-date">{{this.date}}</span>
-        </div>
-        <span class="expense-amount">{{this.amount}}</span>
-      </span>
-  
-      <span class="button-container">
-        <a href="/expense-tracker/{{this._id}}/edit">修改</a>
-        <form action="/expense-tracker/{{this._id}}/?_method=DELETE" method="POST" id="{{this._id}}">
-          <button form="{{this._id}}" type="submit">刪除</button>
-        </form>
-      </span>
+    <div class="col-0 col-md-2 col-lg-3 col-xl-3"></div>
+    <div class="col-8 col-md-7 col-lg-5 col-xl-5" style="max-width: 425px">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td class="col-md-1 align-middle text-info">
+              <i class="{{this.icon}} fa-3x"></i>
+            </td>
+            <td class="col-md-6">
+              <p style="font-size: 1.5em;">{{this.name}}</p>
+              <p style="font-size: 1.2em;">{{this.date}}</p>
+            <td class="col-md-2 align-middle" style="font-size: 1.5em;">{{this.amount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-4 col-md-3 col-lg-2 d-flex justify-content-around align-items-center">
+      <a href="/expense-tracker/{{this._id}}/edit" class="btn btn-info">修改</a>
+      <form action="./expense-tracker/{{this._id}}?_method=DELETE" method="POST" id="{{this._id}}">
+        <button form="{{this._id}}" type="submit" class="btn btn-danger">刪除</button>
+      </form>
     </div>
     {{/each}}
-  </div>  
+  </div>
 </main>
 
-<aside>
-  <a href="/expense-tracker/new" class="new-expense-btn">
-    <button>新增支出</button>
-  </a>
-</aside>
+<div class="row justify-content-center mt-2 mb-3">
+  <a href="./expense-tracker/new" class="btn btn-primary btn-lg col-5" style="max-width: 290px;">新增支出</a>
+</div>
 
 
