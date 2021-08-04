@@ -12,8 +12,6 @@ db.once('open', async () => { // 讓loop跑完所有種子資料再關閉與mong
     ['租金', '家居物業', '2019-04-01', 25000]
   ]
 
-  console.log('mongodb connected.')
-
   for (let i = 0; i < recordData.length; i++) {
     await Record.create( // 用 await 確保資料全都寫入mongoDB
     {
