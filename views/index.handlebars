@@ -1,6 +1,6 @@
 <div class="form-group mt-5 col-md-8 mx-auto" style="max-width: 425px">
   <form action="/" method="GET" class="mt-3">
-    <select class="form-select"  style="font-size: 1.2em;" name="category" onchange="submit()">
+    <select class="form-select"  style="font-size: 1.2em;" name="categoryFilter" onchange="submit()">
       <option>類別</option>
       {{#each category}}
       <option {{#if this.match}} selected="selected" {{/if}}>{{this.category}}</option>
